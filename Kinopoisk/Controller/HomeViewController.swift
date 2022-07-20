@@ -12,6 +12,7 @@ class HomeViewController: UIViewController {
     @IBOutlet private var sectionTableView: UITableView!
     
     private var networkManager = AlamofireNetworkManager.shared
+    
     private var genres: [Genre] = []
     var sectionNames: [String] = ["Today at the cinema", "Soon at the cinema", "Trending movies"]
     
@@ -27,7 +28,6 @@ class HomeViewController: UIViewController {
         setUp()
         loadGenres()
         loadMovies()
-        
     }
     
     private func setUp() {
@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
     }
 }
 
+// MARK: TableView Delegates
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,7 +54,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - Show Delegates
 extension HomeViewController: ShowListDelegate {
+    
     func goToAllMovies(_ index: Int) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "MovieNewsViewController") as? MovieNewsViewController {
             vc.movies = self.sectionMovies[index]
@@ -63,14 +66,14 @@ extension HomeViewController: ShowListDelegate {
     
     func showDescription(for section: Int, id: Int) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
-//            vc.movieId = self.sectionMovies[section][id].id
             vc.movie = self.sectionMovies[section][id]
-//            print(self.sectionMovies[section][id])
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
 }
 
+// MARK: - Network Call
 extension HomeViewController {
     
     private func loadGenres() {
@@ -89,7 +92,7 @@ extension HomeViewController {
         }
         networkManager.loadTrendingMovies { [weak self] movies in
             self?.sectionMovies.append(movies)
-//            self?.sectionTableView.reloadData()
         }
     }
+    
 }

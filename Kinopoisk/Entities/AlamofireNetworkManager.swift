@@ -27,25 +27,24 @@ class AlamofireNetworkManager {
         var components = urlComponents
         components.path = "/3/genre/movie/list"
 
-        guard let requestUrl = components.url else {
-            return
-        }
+        guard let requestUrl = components.url else { return }
         
         AF.request(requestUrl).responseJSON { response in
-            
-//            guard error == nil else {
-//                print("Error: error calling GET")
-//                return
-//            }
+            guard response.error == nil else {
+                print("Error: error calling GET")
+                return
+            }
             
             guard let data = response.data else {
                 print("Error: Did not receive data")
                 return
             }
+            
 //            guard let response = response as? HTTPURLResponse, (200..<300) ~= response.statusCode else {
 //                print("Error: HTTP request failed")
 //                return
 //            }
+            
             do {
                 let genresEntity = try JSONDecoder().decode(GenresEntity.self, from: data)
                 DispatchQueue.main.async {

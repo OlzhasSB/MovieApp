@@ -52,6 +52,7 @@ class MovieNewsViewController: UIViewController {
     }
 }
 
+// MARK: - TableView Delegates
 extension MovieNewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
@@ -71,7 +72,9 @@ extension MovieNewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - CollectionView Delegates
 extension MovieNewsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return genres.count
     }
@@ -91,10 +94,13 @@ extension MovieNewsViewController: UICollectionViewDataSource, UICollectionViewD
     
 }
 
+// MARK: - Network Call
 extension MovieNewsViewController {
+    
     private func loadGenres() {
         networkManager.loadGenres { [weak self] genres in
             self?.genres = genres
         }
     }
+    
 }
