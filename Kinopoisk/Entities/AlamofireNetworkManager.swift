@@ -8,7 +8,16 @@
 import Foundation
 import Alamofire
 
-class AlamofireNetworkManager {
+protocol Networkable {
+    func loadGenres(completion: @escaping ([Genre]) -> Void)
+    func loadTodayMovies(completion: @escaping ([Movie]) -> Void)
+    func loadSoonMovies(completion: @escaping ([Movie]) -> Void)
+    func loadTrendingMovies(completion: @escaping ([Movie]) -> Void)
+    func getCredits(path: String, completion: @escaping ([Actor]) -> Void)
+    func getCast(path: String, completion: @escaping (PersonEntity) -> Void)
+}
+
+class AlamofireNetworkManager: Networkable {
 
     private let API_KEY = "e516e695b99f3043f08979ed2241b3db"
 

@@ -58,17 +58,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 extension HomeViewController: ShowListDelegate {
     
     func goToAllMovies(_ index: Int) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "MovieNewsViewController") as? MovieNewsViewController {
-            vc.movies = self.sectionMovies[index]
-            self.navigationController?.pushViewController(vc, animated: true)
+        let movies = sectionMovies[index]
+        let viewController = MovieNewsModuleAssembly().assemble { (input) in
+            input.configure(with: movies)
         }
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func showDescription(for section: Int, id: Int) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "MovieDetailsViewController") as? MovieDetailsViewController {
-            vc.movie = self.sectionMovies[section][id]
-            self.navigationController?.pushViewController(vc, animated: true)
+        let movie = sectionMovies[section][id]
+        let viewController = MovieDetailsModuleAssembly().assemble { (input) in
+            input.configure(with: movie)
         }
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
 }
