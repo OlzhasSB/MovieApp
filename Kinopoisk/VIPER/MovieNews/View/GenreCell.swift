@@ -13,7 +13,4 @@ class GenreCell: UICollectionViewCell {
     func setUp(with genre: Genre) {
         genreLabel.text = genre.name
     }
-    
-   // genreLabel.layer.masksToBounds
-    
 }

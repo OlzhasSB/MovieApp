@@ -12,9 +12,9 @@ protocol MovieManagerDelegate {
 }
 
 struct MovieManager {
-    
+
     var delegate: MovieManagerDelegate?
-    
+
     func performRequest() {
         if let movieURL = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=e516e695b99f3043f08979ed2241b3db") {
             let session = URLSession(configuration: .default)
@@ -27,13 +27,13 @@ struct MovieManager {
                     if let movieList = self.parseJSON(movieData: safeData) {
                         self.delegate?.didUpdateMovies(movieList: movieList)
                     }
-                    
+
                 }
             }
             task.resume()
         }
     }
-    
+
     func parseJSON(movieData: Data) -> MovieData? {
         let decoder = JSONDecoder()
         do {

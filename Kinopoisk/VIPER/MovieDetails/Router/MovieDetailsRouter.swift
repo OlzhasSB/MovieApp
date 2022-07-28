@@ -16,9 +16,9 @@ final class MovieDetailsRouter: MovieDetailsRouterInput {
     
     func openCastModule(with cast: PersonEntity) {
         // Create CastModuleAssembly
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        guard let castViewController = storyboard.instantiateViewController(withIdentifier: "CastMemberViewController") as? CastMemberViewController else { return }
-        castViewController.cast = cast
-        viewController?.navigationController?.pushViewController(castViewController, animated: true)
+        let viewController = CastMemberModuleAssembly().assemble { (input) in
+            input.configure(with: cast)
+        }
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
 }

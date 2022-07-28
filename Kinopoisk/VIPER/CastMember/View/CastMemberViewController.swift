@@ -7,21 +7,30 @@
 
 import UIKit
 
-class CastMemberViewController: UIViewController {
+protocol CastMemberViewOutput {
+    func didLoadView()
+}
+
+protocol CastMemberViewInput: AnyObject {
+    func handleObtainedCast(_ cast: PersonEntity)
+}
+
+class CastMemberViewController: UIViewController, CastMemberViewInput {
+    
+    var output: CastMemberViewOutput?
+    
     @IBOutlet private var castImageView: UIImageView!
     @IBOutlet private var castNameLabel: UILabel!
     @IBOutlet private var castBirthdayLabel: UILabel!
     @IBOutlet private var castDepartmentLabel: UILabel!
     @IBOutlet private var castBiographyLabel: UILabel!
     
-    var cast: PersonEntity!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        assign()
+        output?.didLoadView()
     }
     
-    private func assign() {
+    func handleObtainedCast(_ cast: PersonEntity) {
         castNameLabel.text = cast.name
         castBirthdayLabel.text = cast.birthday
         castDepartmentLabel.text = cast.known_for_department
@@ -30,4 +39,5 @@ class CastMemberViewController: UIViewController {
         let url = URL(string: "https://image.tmdb.org/t/p/w200\(cast.profile_path)")
         castImageView.kf.setImage(with: url)
     }
+    
 }
